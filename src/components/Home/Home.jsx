@@ -1,31 +1,41 @@
 import { useEffect, useState } from 'react';
-import getMovies, { getMoviesByMovieID } from '../../apiServices/movies';
+import getTrendingMovies from '../../apiServices/movies';
+import { Link } from 'react-router-dom';
 
 export default function Home() {
-  const [movies, setMovies] = useState(null);
-  const [query, setQuery] = useState('Avengers'); // Початковий запит
+  const [movies, setMovies] = useState([]); // Початковий стан — порожній масив
+  const [error, setError] = useState(null); // Для збереження помилок
 
   useEffect(() => {
-    const fetchMovies = async movieID => {
+    const fetchTrendingMovies = async () => {
       try {
-        const data = await getMoviesByMovieID(movieID); // Викликаємо функцію з `query`
-        setMovies(data.movie); // Зберігаємо результати у стан
+        const data = await getTrendingMovies(); // Викликаємо функцію для отримання трендових фільмів
+        setMovies(data); // Зберігаємо результати у стан
       } catch (error) {
-        console.error('Failed to fetch movies:', error.message);
+        setError(error.message); // Зберігаємо повідомлення про помилку
       }
     };
 
-    fetchMovies();
-  }, [movies]); // Викликаємо ефект при зміні `query`
+    fetchTrendingMovies();
+  }, []);
 
   return (
     <div>
-      <h2>Movies</h2>
-      <ul>
-        {movies.map(movie => (
-          <li key={movie.id}>{movie.title}</li>
-        ))}
-      </ul>
+      <h2>Trending Today</h2>
+      {error ? (
+        <p>Error: {error}</p>
+      ) : movies.length > 0 ? (
+        <ul>
+          {movies.map(movie => (
+            <li key={movie.id}>
+              {/* Коректний синтаксис для шаблонного рядка */}
+              <Link to={`/movies/${movie.id}`}>{movie.original_title}</Link>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 }

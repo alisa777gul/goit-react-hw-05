@@ -1,19 +1,20 @@
 import { useEffect, useState } from 'react';
 
 import { useParams } from 'react-router-dom';
-import getCast from '../../apiServices/cast';
 
-export default function MovieCast() {
+import getReviews from '../../apiServices/reviews';
+
+export default function Reviews() {
   const [movies, setMovies] = useState([]); // Початковий стан — порожній масив
   const [error, setError] = useState(null); // Для збереження помилок
   const [loading, setLoading] = useState(null); // Для збереження помилок
   const { movieId } = useParams();
 
   useEffect(() => {
-    const fetchCast = async () => {
+    const fetchReviews = async () => {
       setLoading(true);
       try {
-        const data = await getCast(movieId); // Викликаємо функцію для отримання трендових фільмів
+        const data = await getReviews(movieId); // Викликаємо функцію для отримання трендових фільмів
         setMovies(data); // Зберігаємо результати у стан
         setLoading(false);
       } catch (error) {
@@ -22,7 +23,7 @@ export default function MovieCast() {
       }
     };
 
-    fetchCast();
+    fetchReviews();
   }, [movieId]);
 
   return (
@@ -35,18 +36,13 @@ export default function MovieCast() {
           <ul>
             {movies.map(movie => (
               <li key={movie.id}>
-                <img
-                  src={`https://image.tmdb.org/t/p/w500/${movie.profile_path}`}
-                  alt={movie.name}
-                  width="100"
-                />
                 <p>{movie.name}</p>
               </li>
             ))}
           </ul>
         )
       )}
-      {!loading && movies.length === 0 && <p>No info about cast</p>}
+      {movies.length === 0 && !loading && <p>no reviews yet</p>}
     </div>
   );
 }
