@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import getTrendingMovies from '../../apiServices/movies';
 import { Link } from 'react-router-dom';
+import css from './Home.module.css';
 
 export default function Home() {
   const [movies, setMovies] = useState([]); // Початковий стан — порожній масив
@@ -20,14 +21,14 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
-      <h2>Trending Today</h2>
+    <div className={css.cont}>
+      <h2 className={css.title}>Trending Today</h2>
       {error ? (
         <p>Error: {error}</p>
       ) : movies.length > 0 ? (
-        <ul>
+        <ul className={css.list}>
           {movies.map(movie => (
-            <li key={movie.id}>
+            <li key={movie.id} className={css.elem}>
               {/* Коректний синтаксис для шаблонного рядка */}
               <Link to={`/movies/${movie.id}`}>{movie.original_title}</Link>
             </li>

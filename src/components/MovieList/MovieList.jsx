@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import getMoviesByKeyword from '../../apiServices/moviesSearch';
 import SearchBar from '../SearchBar/SearchBar';
+import css from './MovieList.module.css';
 
 export default function MovieList() {
   const [movies, setMovies] = useState([]);
@@ -45,7 +46,7 @@ export default function MovieList() {
   };
 
   return (
-    <div>
+    <div className={css.cont}>
       <SearchBar onSubmit={handleSubmit} />
 
       {movies.length === 0 && !loading && !query && (

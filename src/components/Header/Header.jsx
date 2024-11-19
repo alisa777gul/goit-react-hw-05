@@ -8,7 +8,7 @@ const buildLinkClass = ({ isActive }) => {
 
 export default function Header() {
   return (
-    <>
+    <header className={css.header}>
       <nav className={css.nav}>
         <NavLink to="/" className={buildLinkClass}>
           Home
@@ -17,6 +17,6 @@ export default function Header() {
           Movies
         </NavLink>
       </nav>
-    </>
+    </header>
   );
 }

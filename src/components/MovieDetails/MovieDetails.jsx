@@ -1,6 +1,7 @@
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import css from './MovieDetails.module.css';
 
 export default function MovieDetails() {
   const { movieId } = useParams();
@@ -32,18 +33,24 @@ export default function MovieDetails() {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div>
-      <Link to={backLink}>Go back</Link>
+    <div className={css.cont}>
+      <Link to={backLink} className={css.back}>
+        {' '}
+        Go back
+      </Link>
       {movie && (
-        <div>
-          <img
-            src={`https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`}
-            alt={movie.title}
-          />
-          <h2>{movie.title}</h2>
-          <p>{movie.overview}</p>
-          <p>Release Date: {movie.release_date}</p>
-          <p>Rating: {movie.vote_average}</p>
+        <div className={css.info}>
+          <div className={css.imgCont}>
+            <img
+              className={css.img}
+              src={`https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`}
+              alt={movie.title}
+            />
+          </div>
+          <h2 className={css.title}>{movie.title}</h2>
+          <p className={css.overview}> {movie.overview}</p>
+          <p className={css.date}>Release Date: {movie.release_date}</p>
+          <p className={css.rating}>Rating: {movie.vote_average}</p>
         </div>
       )}
     </div>

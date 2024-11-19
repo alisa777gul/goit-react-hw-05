@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-
+import css from './MovieCast.module.css';
 import { useParams } from 'react-router-dom';
 import getCast from '../../apiServices/cast';
 

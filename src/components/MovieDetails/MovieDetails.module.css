@@ -1,0 +1,30 @@
+.cont {
+  margin-top: 60px;
+}
+
+.info {
+}
+
+.back {
+  border: 1px solid rgb(255, 255, 255);
+  border-radius: 8px;
+  padding: 8px;
+  background-color: #01023a;
+  left: 12px;
+  position: absolute;
+  margin-bottom: 32px;
+}
+
+.img {
+  width: 100%; /* Изображение растягивается на всю ширину контейнера */
+  height: 100%; /* Изображение растягивается на всю высоту контейнера */
+  object-fit: cover; /* Обрезает изображение, чтобы оно заполнило контейнер */
+  object-position: center;
+}
+
+.imgCont {
+  margin-top: 50px;
+  width: 200px;
+  height: 300px;
+  overflow: hidden;
+}
