@@ -1,13 +1,14 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 
-import NotFound from '../pages/NotFoundPage/NotFoundPage';
 import Header from './Header/Header';
-import MovieDetailsPage from '../pages/MovieDetailsPage/MovieDetailsPage';
-import HomePage from '../pages/HomePage';
-import MoviesPage from '../pages/MoviesPage';
+
 import MovieCast from './MovieCast/MovieCast';
 import Reviews from './Reviews/Reviews';
+import HomePage from '../pages/HomePage/HomePage';
+import MoviesPage from '../pages/MoviesPage/MoviesPage';
+import MovieDetailsPage from '../pages/MovieDetailsPage/MovieDetailsPage';
+import NotFound from '../pages/NotFoundPage/NotFoundPage';
 
 function App() {
   return (
