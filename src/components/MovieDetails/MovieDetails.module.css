@@ -1,8 +1,17 @@
 .cont {
   margin-top: 60px;
+  margin-left: 60px;
+  padding-right: 32px;
+  padding-left: 32px;
 }
 
 .info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 44px;
+  max-width: 900px;
+  margin-top: 50px;
 }
 
 .back {
@@ -11,7 +20,8 @@
   padding: 8px;
   background-color: #01023a;
   left: 12px;
-  position: absolute;
+  top: 72px;
+  position: fixed;
   margin-bottom: 32px;
 }
 
@@ -23,8 +33,16 @@
 }
 
 .imgCont {
-  margin-top: 50px;
   width: 200px;
+
+  min-width: 200px;
   height: 300px;
   overflow: hidden;
+}
+
+.written {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
 }

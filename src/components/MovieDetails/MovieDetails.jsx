@@ -47,10 +47,12 @@ export default function MovieDetails() {
               alt={movie.title}
             />
           </div>
-          <h2 className={css.title}>{movie.title}</h2>
-          <p className={css.overview}> {movie.overview}</p>
-          <p className={css.date}>Release Date: {movie.release_date}</p>
-          <p className={css.rating}>Rating: {movie.vote_average}</p>
+          <div className={css.written}>
+            <h2 className={css.title}>{movie.title}</h2>
+            <p className={css.overview}> {movie.overview}</p>
+            <p className={css.date}>Release Date: {movie.release_date}</p>
+            <p className={css.rating}>Rating: {movie.vote_average}</p>
+          </div>
         </div>
       )}
     </div>

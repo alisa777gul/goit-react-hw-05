@@ -28,7 +28,7 @@ export default function Reviews() {
 
   return (
     <div>
-      <h2>Cast</h2>
+      <h2>Reviews</h2>
       {error ? (
         <p>Error: {error}</p>
       ) : (
