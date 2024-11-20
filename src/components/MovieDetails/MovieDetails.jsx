@@ -2,6 +2,7 @@ import { useParams, Link, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import css from './MovieDetails.module.css';
+import Loader from '../Loader/Loader';
 
 export default function MovieDetails() {
   const { movieId } = useParams();
@@ -20,7 +21,7 @@ export default function MovieDetails() {
         });
         setMovie(data);
       } catch (error) {
-        setError(error.message);
+        setError(true);
       } finally {
         setLoading(false);
       }
@@ -29,15 +30,14 @@ export default function MovieDetails() {
     fetchMovieDetails();
   }, [movieId]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (error) return <p className={css.error}>Error. Reload page.</p>;
 
   return (
     <div className={css.cont}>
       <Link to={backLink} className={css.back}>
-        {' '}
         Go back
       </Link>
+      {loading && <Loader />}
       {movie && (
         <div className={css.info}>
           <div className={css.imgCont}>
@@ -50,8 +50,13 @@ export default function MovieDetails() {
           <div className={css.written}>
             <h2 className={css.title}>{movie.title}</h2>
             <p className={css.overview}> {movie.overview}</p>
-            <p className={css.date}>Release Date: {movie.release_date}</p>
-            <p className={css.rating}>Rating: {movie.vote_average}</p>
+            <p className={css.date}>
+              Release Date:
+              <span className={css.span}> {movie.release_date}</span>
+            </p>
+            <p className={css.rating}>
+              Rating: <span className={css.span}>{movie.vote_average}</span>
+            </p>
           </div>
         </div>
       )}

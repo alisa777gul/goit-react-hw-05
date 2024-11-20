@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import getTrendingMovies from '../../apiServices/movies';
 import { Link } from 'react-router-dom';
 import css from './Home.module.css';
+import Loader from '../Loader/Loader';
 
 export default function Home() {
   const [movies, setMovies] = useState([]); // Початковий стан — порожній масив
@@ -24,18 +25,17 @@ export default function Home() {
     <div className={css.cont}>
       <h2 className={css.title}>Trending Today</h2>
       {error ? (
-        <p>Error: {error}</p>
+        <p className="error">Error. Reload page.</p>
       ) : movies.length > 0 ? (
         <ul className={css.list}>
           {movies.map(movie => (
             <li key={movie.id} className={css.elem}>
-              {/* Коректний синтаксис для шаблонного рядка */}
               <Link to={`/movies/${movie.id}`}>{movie.original_title}</Link>
             </li>
           ))}
         </ul>
       ) : (
-        <p>Loading...</p>
+        <Loader />
       )}
     </div>
   );

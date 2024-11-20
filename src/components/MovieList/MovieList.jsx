@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import getMoviesByKeyword from '../../apiServices/moviesSearch';
 import SearchBar from '../SearchBar/SearchBar';
 import css from './MovieList.module.css';
+import Loader from '../Loader/Loader';
 
 export default function MovieList() {
   const [movies, setMovies] = useState([]);
@@ -30,7 +31,7 @@ export default function MovieList() {
         localStorage.setItem('movies', JSON.stringify(data));
         setError(null);
       } catch (error) {
-        setError(error.message);
+        setError(true);
       } finally {
         setLoading(false);
       }
@@ -52,12 +53,12 @@ export default function MovieList() {
       {movies.length === 0 && !loading && !query && (
         <div className="start">Let’s begin search 🔎</div>
       )}
-      {loading && <p>Loading...</p>}
+      {loading && <Loader />}
 
       {movies.length > 0 ? (
-        <ul>
+        <ul className={css.list}>
           {movies.map(movie => (
-            <li key={movie.id}>
+            <li key={movie.id} className={css.elem}>
               <Link to={`/movies/${movie.id}`} state={{ from: location }}>
                 {movie.original_title}
               </Link>
@@ -65,7 +66,7 @@ export default function MovieList() {
           ))}
         </ul>
       ) : (
-        error && <h2>Error: {error}</h2>
+        error && <h2 className="error">Oops!.. Reload your page.</h2>
       )}
     </div>
   );

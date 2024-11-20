@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import css from './MovieCast.module.css';
 import { useParams } from 'react-router-dom';
 import getCast from '../../apiServices/cast';
+import Loader from '../Loader/Loader';
 
 export default function MovieCast() {
   const [movies, setMovies] = useState([]); // Початковий стан — порожній масив
@@ -17,7 +18,7 @@ export default function MovieCast() {
         setMovies(data); // Зберігаємо результати у стан
         setLoading(false);
       } catch (error) {
-        setError(error.message); // Зберігаємо повідомлення про помилку
+        setError(true); // Зберігаємо повідомлення про помилку
         setLoading(false);
       }
     };
@@ -29,7 +30,7 @@ export default function MovieCast() {
     <div>
       <h2 className={css.title}>Cast</h2>
       {error ? (
-        <p>Error: {error}</p>
+        <p className="error">Error. Reload page.</p>
       ) : (
         movies.length > 0 && (
           <ul className={css.list}>
@@ -49,6 +50,7 @@ export default function MovieCast() {
           </ul>
         )
       )}
+      {loading && <Loader />}
       {!loading && movies.length === 0 && <p>No info about cast</p>}
     </div>
   );

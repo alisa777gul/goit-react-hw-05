@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import getReviews from '../../apiServices/reviews';
+import Loader from '../Loader/Loader';
 
 export default function Reviews() {
   const [movies, setMovies] = useState([]); // Початковий стан — порожній масив
@@ -18,7 +19,7 @@ export default function Reviews() {
         setMovies(data); // Зберігаємо результати у стан
         setLoading(false);
       } catch (error) {
-        setError(error.message); // Зберігаємо повідомлення про помилку
+        setError(true); // Зберігаємо повідомлення про помилку
         setLoading(false);
       }
     };
@@ -30,7 +31,7 @@ export default function Reviews() {
     <div>
       <h2>Reviews</h2>
       {error ? (
-        <p>Error: {error}</p>
+        <p className="error">Error. Reload page.</p>
       ) : (
         movies.length > 0 && (
           <ul>
@@ -42,6 +43,7 @@ export default function Reviews() {
           </ul>
         )
       )}
+      {loading && <Loader />}
       {movies.length === 0 && !loading && <p>no reviews yet</p>}
     </div>
   );

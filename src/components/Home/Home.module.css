@@ -2,3 +2,9 @@
   margin-top: 60px;
   min-width: 900px;
 }
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
