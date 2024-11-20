@@ -6,7 +6,8 @@
 }
 
 .header {
-  border-bottom: 2px solid white;
+  box-shadow: 0 8px 20px rgba(223, 223, 223, 0.4);
+  border-bottom: 1px solid white;
   width: 100%;
   padding: 16px;
   width: 100%;
@@ -15,5 +16,5 @@
   left: 0;
   z-index: 10;
 
-  background-color: rgb(19, 2, 41);
+  background-color: #27293d;
 }

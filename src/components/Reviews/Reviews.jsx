@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { useParams } from 'react-router-dom';
-
+import css from './Reviews.module.css';
 import getReviews from '../../apiServices/reviews';
 import Loader from '../Loader/Loader';
 
@@ -28,16 +28,16 @@ export default function Reviews() {
   }, [movieId]);
 
   return (
-    <div>
-      <h2>Reviews</h2>
+    <div className={css.cont}>
+      <h2 className={css.title}>Reviews</h2>
       {error ? (
         <p className="error">Error. Reload page.</p>
       ) : (
         movies.length > 0 && (
-          <ul>
+          <ul className={css.list}>
             {movies.map(movie => (
-              <li key={movie.id}>
-                <p>{movie.name}</p>
+              <li className={css.elem} key={movie.id}>
+                <p className={css.name}>{movie.name}</p>
               </li>
             ))}
           </ul>
