@@ -40,7 +40,7 @@ export default function MovieDetails() {
         Go back
       </Link>
 
-      {movie && (
+      {movie && !loading && (
         <div className={css.info}>
           <div className={css.imgCont}>
             <img
