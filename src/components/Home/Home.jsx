@@ -24,7 +24,7 @@ export default function Home() {
     <div className={css.cont}>
       <h2 className={css.title}>Trending Today</h2>
       {error && <p className="error">Error: {error}. Reload page.</p>}
-      {movies.length > 0 ? (
+      {movies.length > 0 && (
         <ul className={css.list}>
           {movies.map(movie => (
             <li key={movie.id} className={css.elem}>
@@ -32,8 +32,6 @@ export default function Home() {
             </li>
           ))}
         </ul>
-      ) : (
-        <p>No trending movies found.</p>
       )}
     </div>
   );

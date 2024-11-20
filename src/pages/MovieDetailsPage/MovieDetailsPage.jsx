@@ -1,6 +1,8 @@
 import { Link, Outlet } from 'react-router-dom';
 import MovieDetails from '../../components/MovieDetails/MovieDetails';
 import css from './MovieDetailsPage.module.css';
+import { Suspense } from 'react';
+import Loader from '../../components/Loader/Loader';
 
 export default function MovieDetailsPage() {
   return (
@@ -14,7 +16,9 @@ export default function MovieDetailsPage() {
           <Link to="reviews">Reviews</Link>
         </li>
       </ul>
-      <Outlet />
+      <Suspense fallback={<Loader />}>
+        <Outlet />
+      </Suspense>
     </>
   );
 }
