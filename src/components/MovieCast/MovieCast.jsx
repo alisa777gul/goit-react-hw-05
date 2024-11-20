@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
 import css from './MovieCast.module.css';
 import { useParams } from 'react-router-dom';
