@@ -2,19 +2,18 @@ import { useEffect, useState } from 'react';
 import getTrendingMovies from '../../apiServices/movies';
 import { Link } from 'react-router-dom';
 import css from './Home.module.css';
-import Loader from '../Loader/Loader';
 
 export default function Home() {
-  const [movies, setMovies] = useState([]); // Початковий стан — порожній масив
-  const [error, setError] = useState(null); // Для збереження помилок
+  const [movies, setMovies] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchTrendingMovies = async () => {
       try {
-        const data = await getTrendingMovies(); // Викликаємо функцію для отримання трендових фільмів
-        setMovies(data); // Зберігаємо результати у стан
+        const data = await getTrendingMovies();
+        setMovies(data);
       } catch (error) {
-        setError(error.message); // Зберігаємо повідомлення про помилку
+        setError(error.message);
       }
     };
 
@@ -24,9 +23,8 @@ export default function Home() {
   return (
     <div className={css.cont}>
       <h2 className={css.title}>Trending Today</h2>
-      {error ? (
-        <p className="error">Error. Reload page.</p>
-      ) : movies.length > 0 ? (
+      {error && <p className="error">Error: {error}. Reload page.</p>}
+      {movies.length > 0 ? (
         <ul className={css.list}>
           {movies.map(movie => (
             <li key={movie.id} className={css.elem}>
@@ -35,7 +33,7 @@ export default function Home() {
           ))}
         </ul>
       ) : (
-        <Loader />
+        <p>No trending movies found.</p>
       )}
     </div>
   );

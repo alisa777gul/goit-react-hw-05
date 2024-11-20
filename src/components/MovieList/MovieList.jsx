@@ -3,14 +3,11 @@ import { Link, useLocation } from 'react-router-dom';
 import getMoviesByKeyword from '../../apiServices/moviesSearch';
 import SearchBar from '../SearchBar/SearchBar';
 import css from './MovieList.module.css';
-import Loader from '../Loader/Loader';
 
 export default function MovieList() {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState('');
-  const [loading, setLoading] = useState(false);
-
   const location = useLocation();
 
   useEffect(() => {
@@ -24,16 +21,13 @@ export default function MovieList() {
     if (!query) return;
 
     const fetchMovies = async () => {
-      setLoading(true);
+      setError(null);
       try {
         const data = await getMoviesByKeyword({ query });
         setMovies(data);
         localStorage.setItem('movies', JSON.stringify(data));
-        setError(null);
       } catch (error) {
-        setError(true);
-      } finally {
-        setLoading(false);
+        setError('Failed to load movies. Please try again later.');
       }
     };
 
@@ -50,10 +44,9 @@ export default function MovieList() {
     <div className={css.cont}>
       <SearchBar onSubmit={handleSubmit} />
 
-      {movies.length === 0 && !loading && !query && (
+      {movies.length === 0 && !query && (
         <div className="start">Let’s begin search 🔎</div>
       )}
-      {loading && <Loader />}
 
       {movies.length > 0 ? (
         <ul className={css.list}>
@@ -66,7 +59,7 @@ export default function MovieList() {
           ))}
         </ul>
       ) : (
-        error && <h2 className="error">Oops!.. Reload your page.</h2>
+        error && <h2 className="error">{error}</h2>
       )}
     </div>
   );

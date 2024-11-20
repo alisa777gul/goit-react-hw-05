@@ -1,25 +1,23 @@
 import { useEffect, useState } from 'react';
-
 import { useParams } from 'react-router-dom';
 import css from './Reviews.module.css';
 import getReviews from '../../apiServices/reviews';
-import Loader from '../Loader/Loader';
 
-export default function Reviews() {
-  const [movies, setMovies] = useState([]); // Початковий стан — порожній масив
-  const [error, setError] = useState(null); // Для збереження помилок
-  const [loading, setLoading] = useState(null); // Для збереження помилок
+const Reviews = () => {
+  const [movies, setMovies] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const { movieId } = useParams();
 
   useEffect(() => {
     const fetchReviews = async () => {
       setLoading(true);
       try {
-        const data = await getReviews(movieId); // Викликаємо функцію для отримання трендових фільмів
-        setMovies(data); // Зберігаємо результати у стан
+        const data = await getReviews(movieId);
+        setMovies(data);
         setLoading(false);
       } catch (error) {
-        setError(true); // Зберігаємо повідомлення про помилку
+        setError('Failed to load reviews.');
         setLoading(false);
       }
     };
@@ -31,20 +29,22 @@ export default function Reviews() {
     <div className={css.cont}>
       <h2 className={css.title}>Reviews</h2>
       {error ? (
-        <p className="error">Error. Reload page.</p>
+        <p className="error">{error}</p>
       ) : (
         movies.length > 0 && (
           <ul className={css.list}>
             {movies.map(movie => (
-              <li className={css.elem} key={movie.id}>
+              <li key={movie.id} className={css.elem}>
                 <p className={css.name}>{movie.name}</p>
               </li>
             ))}
           </ul>
         )
       )}
-      {loading && <Loader />}
-      {movies.length === 0 && !loading && <p>no reviews yet</p>}
+
+      {movies.length === 0 && !loading && <p>No reviews yet.</p>}
     </div>
   );
-}
+};
+
+export default Reviews;
