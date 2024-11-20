@@ -2,19 +2,16 @@ import { useState } from 'react';
 import css from './SearchBar.module.css';
 
 export default function SearchBar({ onSubmit }) {
-  const [query, setQuery] = useState('');
+  const [input, setInput] = useState('');
 
   const handleChange = e => {
-    setQuery(e.target.value);
+    setInput(e.target.value);
   };
 
   const handleSubmit = e => {
     e.preventDefault();
-    if (!query.trim()) {
-      return alert('Please enter a value!');
-    }
-    onSubmit(query); // Передаємо значення у батьківський компонент
-    setQuery(''); // Очищуємо поле вводу
+    if (!input.trim()) return alert('Please enter a value!');
+    onSubmit(input);
   };
 
   return (
@@ -22,9 +19,9 @@ export default function SearchBar({ onSubmit }) {
       <input
         className={css.input}
         type="text"
-        value={query}
-        placeholder="Search movies..."
+        value={input}
         onChange={handleChange}
+        placeholder="Search movies..."
         autoFocus
       />
       <button type="submit" className={css.button}>

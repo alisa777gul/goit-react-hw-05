@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import getMoviesByKeyword from '../../apiServices/moviesSearch';
 import SearchBar from '../SearchBar/SearchBar';
 import css from './MovieList.module.css';
@@ -8,27 +7,25 @@ import css from './MovieList.module.css';
 export default function MovieList() {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
-  const [query, setQuery] = useState('');
+  const [loading, setLoading] = useState(false);
   const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  useEffect(() => {
-    const savedMovies = localStorage.getItem('movies');
-    if (savedMovies) {
-      setMovies(JSON.parse(savedMovies));
-    }
-  }, []);
+  const query = searchParams.get('name') || '';
 
   useEffect(() => {
     if (!query) return;
 
     const fetchMovies = async () => {
+      setLoading(true);
       setError(null);
       try {
         const data = await getMoviesByKeyword({ query });
         setMovies(data);
-        localStorage.setItem('movies', JSON.stringify(data));
       } catch (error) {
         setError('Failed to load movies. Please try again later.');
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -36,20 +33,19 @@ export default function MovieList() {
   }, [query]);
 
   const handleSubmit = newQuery => {
-    setQuery(newQuery);
+    setSearchParams({ name: newQuery });
     setMovies([]);
-    setError(null);
   };
 
   return (
     <div className={css.cont}>
       <SearchBar onSubmit={handleSubmit} />
 
-      {movies.length === 0 && !query && (
+      {movies.length === 0 && !loading && !error && (
         <div className="start">Let’s begin search 🔎</div>
       )}
 
-      {movies.length > 0 ? (
+      {movies.length > 0 && (
         <ul className={css.list}>
           {movies.map(movie => (
             <li key={movie.id} className={css.elem}>
@@ -59,9 +55,9 @@ export default function MovieList() {
             </li>
           ))}
         </ul>
-      ) : (
-        error && <h2 className="error">{error}</h2>
       )}
+
+      {error && <h2 className="error">{error}</h2>}
     </div>
   );
 }
