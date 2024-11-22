@@ -23,12 +23,15 @@ export default function Home() {
   return (
     <div className={css.cont}>
       <h2 className={css.title}>Trending Today</h2>
+
       {error && <p className="error">Error: {error}. Reload page.</p>}
       {movies.length > 0 && (
         <ul className={css.list}>
           {movies.map(movie => (
             <li key={movie.id} className={css.elem}>
-              <Link to={`/movies/${movie.id}`}>{movie.original_title}</Link>
+              <Link to={`/movies/${movie.id}`} state={{ from: '/' }}>
+                {movie.original_title}
+              </Link>
             </li>
           ))}
         </ul>

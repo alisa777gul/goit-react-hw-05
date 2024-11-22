@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import getMoviesByKeyword from '../../apiServices/moviesSearch';
@@ -35,6 +36,7 @@ export default function MovieList() {
   const handleSubmit = newQuery => {
     setSearchParams({ name: newQuery });
     setMovies([]);
+    setError(null);
   };
 
   return (

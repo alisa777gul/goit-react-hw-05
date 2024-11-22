@@ -7,7 +7,7 @@ import css from './MovieDetails.module.css';
 export default function MovieDetails() {
   const { movieId } = useParams();
   const location = useLocation();
-  const backLink = location.state?.from ?? '/movies';
+  const backLink = location.state?.from ?? '/';
 
   const [movie, setMovie] = useState(null);
   const [error, setError] = useState(null);
@@ -24,7 +24,7 @@ export default function MovieDetails() {
         });
         setMovie(data);
       } catch (error) {
-        setError('Error fetching movie details');
+        setError('Error fetching movie details. Try again.');
       } finally {
         setLoading(false);
       }
@@ -33,14 +33,12 @@ export default function MovieDetails() {
     fetchMovieDetails();
   }, [movieId]);
 
-  if (error) return <p className={css.error}>{error}</p>;
-
   return (
     <div className={css.cont}>
       <Link to={backLink} className={css.back}>
         Go back
       </Link>
-
+      {error && <p className={css.error}>{error}</p>}
       {movie && !loading && (
         <div className={css.info}>
           <div className={css.imgCont}>

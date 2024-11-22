@@ -16,9 +16,10 @@ const Reviews = () => {
       try {
         const data = await getReviews(movieId);
         setMovies(data);
-        setLoading(false);
       } catch (error) {
         setError('Failed to load reviews.');
+        setLoading(false);
+      } finally {
         setLoading(false);
       }
     };
