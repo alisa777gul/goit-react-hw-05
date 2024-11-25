@@ -13,3 +13,7 @@
   gap: 8px;
   align-items: start;
 }
+
+.title {
+  margin-top: 0;
+}

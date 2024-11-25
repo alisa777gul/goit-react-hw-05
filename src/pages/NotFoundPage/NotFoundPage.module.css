@@ -1,0 +1,25 @@
+.notFound {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.back {
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 12px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #27293d, #000000);
+  color: #ffffff;
+  left: 8px;
+  top: 80px;
+  box-shadow: 0 10px 15px rgba(255, 255, 255, 0.3), 0 2px 4px rgba(0, 0, 0, 0.7);
+  position: fixed;
+  font-size: 16px;
+  font-family: 'Arial', sans-serif;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.back:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(255, 255, 255, 0.4), 0 4px 8px rgba(0, 0, 0, 0.6);
+}
