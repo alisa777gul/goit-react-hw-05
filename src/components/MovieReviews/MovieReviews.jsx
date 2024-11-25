@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import css from './Reviews.module.css';
+import css from './MovieReviews.module.css';
 import getReviews from '../../apiServices/reviews';
 
 const Reviews = () => {

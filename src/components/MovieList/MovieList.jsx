@@ -1,29 +1,26 @@
-/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
-import { Link, useLocation, useSearchParams } from 'react-router-dom';
-import getMoviesByKeyword from '../../apiServices/moviesSearch';
-import SearchBar from '../SearchBar/SearchBar';
+import { Link, useLocation } from 'react-router-dom';
 import css from './MovieList.module.css';
+import getMoviesByKeyword from '../../apiServices/moviesSearch';
+import getTrendingMovies from '../../apiServices/movies';
 
-export default function MovieList() {
+export default function MovieList({ query }) {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const location = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const query = searchParams.get('name') || '';
 
   useEffect(() => {
-    if (!query) return;
-
     const fetchMovies = async () => {
       setLoading(true);
       setError(null);
+
       try {
-        const data = await getMoviesByKeyword({ query });
+        const data = query
+          ? await getMoviesByKeyword({ query })
+          : await getTrendingMovies();
         setMovies(data);
-      } catch (error) {
+      } catch {
         setError('Failed to load movies. Please try again later.');
       } finally {
         setLoading(false);
@@ -33,33 +30,19 @@ export default function MovieList() {
     fetchMovies();
   }, [query]);
 
-  const handleSubmit = newQuery => {
-    setSearchParams({ name: newQuery });
-    setMovies([]);
-    setError(null);
-  };
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p className="error">{error}</p>;
+  if (movies.length === 0) return <p>No movies found.</p>;
 
   return (
-    <div className={css.cont}>
-      <SearchBar onSubmit={handleSubmit} />
-
-      {movies.length === 0 && !loading && !error && (
-        <div className="start">Let’s begin search 🔎</div>
-      )}
-
-      {movies.length > 0 && (
-        <ul className={css.list}>
-          {movies.map(movie => (
-            <li key={movie.id} className={css.elem}>
-              <Link to={`/movies/${movie.id}`} state={{ from: location }}>
-                {movie.original_title}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
-
-      {error && <h2 className="error">{error}</h2>}
-    </div>
+    <ul className={css.list}>
+      {movies.map(movie => (
+        <li key={movie.id} className={css.elem}>
+          <Link to={`/movies/${movie.id}`} state={{ from: location }}>
+            {movie.original_title}
+          </Link>
+        </li>
+      ))}
+    </ul>
   );
 }
